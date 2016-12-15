@@ -20,7 +20,9 @@ namespace entityStore.Controllers
         [Route("orders")]
         public IActionResult Index()
         {
-            ViewBag.Orders = _context.Orders.OrderByDescending(c => c.CreatedAt);
+            ViewBag.Orders = _context.Orders;
+            ViewBag.Products = _context.Products.ToList();
+            ViewBag.Customers = _context.Customers.ToList();
             return View("OrderIndex");
         }
         [HttpPost]
@@ -30,14 +32,15 @@ namespace entityStore.Controllers
             if (ModelState.IsValid)
             {
                 Order NewOrder = new Order {
+
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
                 };
                 _context.Orders.Add(NewOrder);
-                _context.SaveChanges();
+                // _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Customers = _context.Customers.OrderByDescending(c => c.CreatedAt);
+            ViewBag.Customers = _context.Orders;
             return View("OrderIndex");
         }
     }
