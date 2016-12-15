@@ -1,0 +1,30 @@
+@{
+    ViewData["Title"] = "Customers";
+}
+<h1>Customers</h1>
+@model entityStore.Models.CustomerViewModel
+<form asp-action="CreateCustomer" asp-controller="Customer" method="POST">
+    <h3>Add a new customer:</h3>
+    <div asp-validation-summary="All" class='errors'></div>
+    <label asp-for="Name"></label>
+    <input type="text" asp-for="Name">
+    <button class="btn btn-primary" type="submit">Add</button>
+</form>
+<div>
+    <h2>Customers in Database</h2>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Customer ID</th>
+            <th>Name</thead>
+            <th>Created Date</thead>
+        </tr>
+        @foreach (var customer in ViewBag.Customers)
+        {
+            <tr>
+                <td>@customer.CustomerId</td>
+                <td>@customer.Name</td>
+                <td>@customer.CreatedAt</td>
+            </tr>
+        }
+    </table>
+</div>

@@ -1,0 +1,55 @@
+@{
+    ViewData["Title"] = "Products";
+}
+<h1>Products</h1>
+@model entityStore.Models.ProductViewModel
+<form asp-action="AddProduct" asp-controller="Product" method="POST">
+    <h3>Add a new product:</h3>
+    <div asp-validation-summary="All" class='errors'></div>
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input class="form-control" type="text" asp-for="Name">
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea class="form-control" asp-for="Description" id="" cols="40" rows="2"></textarea>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <input class="form-control" type="number" asp-for="Price">
+    </div>
+    <div class="form-group">
+        <label asp-for="Quantity"></label>
+        <input class="form-control" type="Number" asp-for="Quantity">
+    </div>
+    <div class="form-group">
+        <label for="Url">Image Url</label>
+        <input class="form-control" type="text" asp-for="Url">
+    </div>
+    
+    <button class="btn btn-primary" type="submit">Add</button>
+</form>
+<div>
+    <h2>Products</h2>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Product ID</th>
+            <th>Name</thead>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Image</th>
+            <th>Created Date</thead>
+        </tr>
+        @foreach (var product in ViewBag.Products)
+        {
+            <tr>
+                <td>@product.ProductId</td>
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>@product.Quantity</td>
+                <td><img class="productImg" src="@product.Url" alt="@product.Description"></td>
+                <td>@product.CreatedAt</td>
+            </tr>
+        }
+    </table>
+</div>
