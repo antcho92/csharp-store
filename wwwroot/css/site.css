@@ -3,5 +3,12 @@
     color: red;
 }
 .productImage {
-    width: 50px;
+    width: 100px;
+    margin: auto;
+}
+.profilePic {
+    width: 25px;
+}
+.product {
+    text-align: center;
 }

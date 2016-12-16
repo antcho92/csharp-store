@@ -21,7 +21,7 @@ namespace entityStore.Controllers
         public IActionResult Index()
         {
             ViewBag.Orders = _context.Orders;
-            ViewBag.Products = _context.Products.ToList();
+            ViewBag.Products = _context.Products.OrderByDescending(p => p.Quantity).ToList();
             ViewBag.Customers = _context.Customers.ToList();
             return View("OrderIndex");
         }
@@ -31,16 +31,31 @@ namespace entityStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                Order NewOrder = new Order {
-
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now
-                };
-                _context.Orders.Add(NewOrder);
-                // _context.SaveChanges();
-                return RedirectToAction("Index");
+                Product checkProduct = _context.Products.SingleOrDefault(p => p.ProductId == order.ProductId);
+                if(checkProduct.Quantity >= order.Quantity && order.Quantity > 0)
+                {
+                    Order NewOrder = new Order {
+                        ProductId = order.ProductId,
+                        CustomerId = order.CustomerId,
+                        Quantity = order.Quantity,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    };
+                    checkProduct.Quantity -= NewOrder.Quantity;
+                    _context.Orders.Add(NewOrder);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    // Custom ModelState error message
+                    ModelState.AddModelError(string.Empty, "Invalid Quantity");
+                }
             }
-            ViewBag.Customers = _context.Orders;
+            System.Console.WriteLine("Failed to add order");
+            ViewBag.Products = _context.Products.OrderByDescending(p => p.Quantity).ToList();
+            ViewBag.Customers = _context.Customers.ToList();
+            ViewBag.Orders = _context.Orders;
             return View("OrderIndex");
         }
     }

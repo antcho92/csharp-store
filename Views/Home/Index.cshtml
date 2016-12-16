@@ -1,5 +1,42 @@
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "E-store Overview";
+    DateTime Today = DateTime.Now;
 }
-<h1>Default Blank Page~</h1>
-<p>Get to adding stuff</p>
+
+<div class='products' class="container-fluid">
+    <h2>Products</h2>
+    <div class="row">
+        @foreach (var product in ViewBag.Products)
+        {
+            <div class='product col-md-4 col-lg-2'>
+                <img class='img-responsive productImage' src="@product.Url" alt="@product.Description">
+                <h4>@product.Name</h4>
+                @if (product.Quantity == 0)
+                {
+                    <p>Out of stock</p>
+                } 
+                else 
+                {
+                    <p>@product.Quantity Left!</p>  
+                }
+            </div>
+        }
+    </div>
+</div>
+<div>
+    <h2>Recent Orders</h2>
+    @foreach (var order in ViewBag.Orders)
+    {
+        var timeDiff = (Today - order.Customer.CreatedAt).Hours;
+        <p>@order.Customer.Name ordered @order.Product.Name @timeDiff hours ago</p>
+    }
+</div>
+<div>
+    <h2>New Customers</h2>
+    
+    @foreach (var customer in ViewBag.Customers)
+    {
+        var timeDiff = (Today-customer.CreatedAt).Days;
+        <p><img src="http://wis.cs.ucla.edu/wis/img/porky.gif" alt="Default profile picture" class="profilePic">@customer.Name joined the store @timeDiff days ago</p>
+    }
+</div>

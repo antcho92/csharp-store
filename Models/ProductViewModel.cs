@@ -6,7 +6,7 @@ namespace entityStore.Models
     {
         [Required]
         [MinLength(3)]
-        [RegularExpression("^[a-zA-Z]+$")]
+        [RegularExpression(@"^\w+[\s-]?\w+$")]
         public string Name { get; set; }
         [Required]
         public double Price { get; set; }

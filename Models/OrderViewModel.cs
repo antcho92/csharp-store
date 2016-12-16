@@ -12,5 +12,11 @@ namespace entityStore.Models
         [Required]
         [Display(Name = "Customer")]
         public int CustomerId { get; set; }
+        // For Debugging
+        public void PrintAll()
+        {
+            System.Console.WriteLine(ProductId);
+            System.Console.WriteLine(CustomerId);
+        }
     }
 }
