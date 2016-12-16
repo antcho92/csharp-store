@@ -22,6 +22,7 @@
             </div>
         }
     </div>
+    <a href="/products">View more products</a>
 </div>
 <div>
     <h2>Recent Orders</h2>
@@ -30,6 +31,7 @@
         var timeDiff = (Today - order.Customer.CreatedAt).Hours;
         <p>@order.Customer.Name ordered @order.Product.Name @timeDiff hours ago</p>
     }
+    <a href="/orders">View more orders</a>
 </div>
 <div>
     <h2>New Customers</h2>
@@ -39,4 +41,5 @@
         var timeDiff = (Today-customer.CreatedAt).Days;
         <p><img src="http://wis.cs.ucla.edu/wis/img/porky.gif" alt="Default profile picture" class="profilePic">@customer.Name joined the store @timeDiff days ago</p>
     }
+    <a href="/customers">View more customers</a>
 </div>
